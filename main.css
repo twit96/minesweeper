@@ -22,12 +22,12 @@ body {
 }
 
 #board {
-  border-width: 0.35em;
+  border-width: 0.35rem;
   border-style: solid;
   border-color: var(--dark-grey) var(--white) var(--white) var(--dark-grey);
 
-  width: 85vmin;
-  height: 85vmin;
+  width: 90vmin;
+  height: 90vmin;
 
   margin: 0 auto;
   display: grid;
@@ -42,7 +42,7 @@ body {
 
   font-weight: bold;
   font-size: 24px;
-  font-size: clamp(1rem, -0.75rem + 8vw, 3rem);
+  font-size: clamp(1.25rem, -0.75rem + 8vw, 3rem);
 }
 .cell.clicked { border: 0.05rem solid var(--dark-grey); }
 
