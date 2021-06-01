@@ -60,14 +60,12 @@ function setDimensions() {
     board.style.height = '90vh';
   }
 
-  var elements = document.getElementsByClassName('cell');
-  for (var i = 0; i < elements.length; i++) {
-    elements[i].style.width = cell_dimensions;
-    elements[i].style.height = cell_dimensions;
-    elements[i].style.fontSize = cell_font_size;
+  var cells = document.getElementsByClassName('cell');
+  for (var i = 0; i < cells.length; i++) {
+    cells[i].style.width = cell_dimensions;
+    cells[i].style.height = cell_dimensions;
+    cells[i].style.fontSize = cell_font_size;
   }
-
-
 }
 
 
@@ -81,3 +79,8 @@ window.addEventListener('resize', function() {
 });
 
 setDimensions();
+
+var button = document.querySelector('button');  // smiley button
+button.addEventListener("click", function(){
+  setDimensions();
+}, false);

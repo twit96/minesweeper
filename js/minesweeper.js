@@ -1,10 +1,12 @@
-var difficulty = 'easy';
+var difficulty = 'intermediate';
 var num_rows;
 var num_cols;
 var num_mines;
 var grid;
 
 var scoreboard = document.getElementById("scoreboard");
+var mine_count = document.getElementById('mine-count');
+var button = document.querySelector('button');  // smiley button
 var board = document.getElementById('board');  // game board
 
 function setPresets(difficulty) {
@@ -23,6 +25,10 @@ function setPresets(difficulty) {
   // update board layout
   board.style.gridTemplateColumns = 'repeat(' + num_cols + ', 1fr)';
   board.style.gridTemplateRows = 'repeat(' + num_rows + ', 1fr)';
+  // reset scoreboard
+  mine_count.innerHTML = '0' + num_mines;
+  button.style.backgroundImage = 'url(./img/face-smile.png)';
+
 }
 
 
@@ -114,6 +120,10 @@ function configureGame(difficulty) {
 configureGame(difficulty);
 // setInterval(configureGame, 2000);
 
+button.addEventListener("click", function(){
+  configureGame(difficulty);
+}, false);
+
 
 function clickCell(cell, cell_id) {
 
@@ -129,7 +139,7 @@ function clickCell(cell, cell_id) {
   var val = cell.innerHTML[0];
 
   // hit mine
-  if (val == 'M') { return; }
+  if (val == 'M') { hitMine(cell); }
 
   // hit nonzero number
   if (val != 0) { return; }
@@ -159,5 +169,20 @@ function clickCell(cell, cell_id) {
         }
       }
     }
+  }
+}
+
+
+function hitMine(cell) {
+  console.log('mine hit!');
+  cell.style.backgroundColor = '#ff0000';
+  button.style.backgroundImage = 'url(./img/face-frown.png)';
+  var covers = document.getElementsByClassName('cover');
+  var parent;
+  while (covers.length > 0) {
+    parent = covers[0].parentNode;
+    parent.removeChild(covers[0]);
+    parent.onclick = null;
+    parent.classList.add('clicked');
   }
 }

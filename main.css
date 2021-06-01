@@ -31,8 +31,22 @@ body > * {
 header {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   padding: 0.5em;
 }
+
+button {
+  cursor: pointer;
+  height: 2.5em;
+  width: 2.5em;
+  border: 0;
+  outline: 0;
+  border-radius: 50%;
+  background-image: url('./img/face-smile.png');
+  background-size: contain;
+}
+button:hover,
+button:focus { box-shadow: 0 0 0.5em var(--dark-grey); }
 
 #board {
   display: grid;
@@ -49,7 +63,10 @@ header {
 }
 .cell.clicked { border: 0.05rem solid var(--dark-grey); }
 
-.cell.num0 { color: transparent; }
+.cell.num0 {
+  color: transparent;
+  user-select: none;
+}
 .cell.num1 { color: #0000ff; }
 .cell.num2 { color: #008000; }
 .cell.num3 { color: #ff0000; }
@@ -58,9 +75,15 @@ header {
 .cell.num6 { color: #008081; }
 .cell.num7 { color: #000000; }
 .cell.num8 { color: #808080; }
-.cell.numM { background: #ff0000; }
+.cell.numM {
+  color: transparent;
+  user-select: none;
+  background-image: url('./img/mine.png');
+  background-size: contain;
+}
 
 .cover {
+  /* display: none; */
   position: absolute;
   top: 0;
   right: 0;
