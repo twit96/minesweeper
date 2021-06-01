@@ -175,6 +175,7 @@ function clickCell(cell, cell_id) {
 
 function hitMine(cell) {
   console.log('mine hit!');
+  window.navigator.vibrate(250); // vibrate for 250ms
   cell.style.backgroundColor = '#ff0000';
   button.style.backgroundImage = 'url(./img/face-frown.png)';
   var covers = document.getElementsByClassName('cover');
