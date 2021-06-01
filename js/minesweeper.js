@@ -121,7 +121,7 @@ configureGame(difficulty);
 // setInterval(configureGame, 2000);
 
 button.addEventListener("click", function(){
-  window.navigator.vibrate(100); // vibrate for 100ms
+  window.navigator.vibrate(50); // vibrate for 50ms
   configureGame(difficulty);
 }, false);
 
