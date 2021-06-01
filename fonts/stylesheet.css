@@ -1,0 +1,24 @@
+@font-face {
+    font-family: 'Cursed Timer ULiL';
+    src: url('CursedTimerULiL.eot');
+    src: url('CursedTimerULiL.eot?#iefix') format('embedded-opentype'),
+        url('CursedTimerULiL.woff2') format('woff2'),
+        url('CursedTimerULiL.woff') format('woff'),
+        url('CursedTimerULiL.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Cursed Timer ULiL';
+    src: url('CursedTimerULiL_1.eot');
+    src: url('CursedTimerULiL_1.eot?#iefix') format('embedded-opentype'),
+        url('CursedTimerULiL_1.woff2') format('woff2'),
+        url('CursedTimerULiL_1.woff') format('woff'),
+        url('CursedTimerULiL_1.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
