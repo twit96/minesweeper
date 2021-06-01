@@ -6,6 +6,7 @@
     <title>Minesweeper</title>
     <meta name="description" content="Minesweeper Game"/>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="ScreenOrientation" content="autoRotate:disabled">
     <link rel="icon" href="./img/icon.png" />
     <link rel="stylesheet" type="text/css" href="main.css" />
     <script src="./js/minesweeper.js" defer></script>
@@ -15,10 +16,16 @@
   <body>
     <div id="scoreboard">
       <span id="mine-count">000</span>
-      <button></button>
+      <button id="smiley-btn"></button>
       <span id="timer">000</span>
     </div>
-    <div id="board"></div>
+    <div id="game-board"></div>
+    <button id="settings-btn">Settings</button>
+    <!-- <section id="settings">
+      <header>
+        <h1>Minesweeper</h1>
+      </header>
+    </section> -->
   </body>
 
 </html>

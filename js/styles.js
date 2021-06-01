@@ -1,4 +1,8 @@
 var body = document.querySelector('body');
+var scoreboard = document.getElementById("scoreboard");
+var board = document.getElementById('game-board');
+var settings = document.getElementById('settings-btn');
+
 var body_width;
 var body_height;
 function setDimensions() {
@@ -7,11 +11,12 @@ function setDimensions() {
   body_height = window.innerHeight;
 
   var scoreboard_height = scoreboard.offsetHeight;
-  var board_height = body_height - scoreboard_height;
+  var settings_height = settings.offsetHeight;
+  var board_height = body_height - scoreboard_height - settings_height;
   var view_min = Math.min(board_height, body_width);
 
   var body_padding = Math.floor(0.025 * view_min);
-  board_height -= (3 * body_padding);
+  board_height -= (4 * body_padding);
   body_width -= (2 * body_padding);
   view_min = Math.min(board_height, body_width);
 
@@ -24,13 +29,17 @@ function setDimensions() {
   scoreboard.style.width = view_min + "px";
   board.style.height = view_min + "px";
   board.style.width = view_min + "px";
+  // settings.style.width = view_min + "px";
+  settings.style.marginTop = body_padding + "px";
 
   if (
     (difficulty) &&
     (difficulty == 'expert') &&
-    (window.innerWidth <= 1000)
+    (window.innerWidth <= 700)
   ) {
-    board.style.height = '90vh';
+    var view_max = Math.max(board_height, body_width) - (4 * body_padding);
+    board.style.height = view_max + 'px';
+    cell_font_size = (cell_dimensions / 8) * 7 + "px";
   }
 
   var cells = document.getElementsByClassName('cell');
@@ -53,7 +62,7 @@ window.addEventListener('resize', function() {
 
 setDimensions();
 
-var button = document.querySelector('button');  // smiley button
+var button = document.getElementById('smiley-btn');
 button.addEventListener("click", function(){
   setDimensions();
 }, false);

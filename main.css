@@ -67,19 +67,26 @@ body > * {
   padding: 0.25em 0.25em 0 0.25em;
 }
 
-#scoreboard button {
+#smiley-btn {
   cursor: pointer;
   height: 2.5em;
   width: 2.5em;
   border: 0;
   outline: 0;
-  border-radius: 50%;
+  background-color: var(--light-grey);
   background-image: url('./img/face-smile.png');
   background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  border-width: min(0.25em, 0.5rem);
+  border-style: solid;
+  border-color: var(--white) var(--dark-grey) var(--dark-grey) var(--white);
 }
-#scoreboard button:hover { box-shadow: 0 0 0.5em var(--dark-grey); }
+#smiley-btn:hover {
+  border-color: var(--dark-grey) var(--white) var(--white) var(--dark-grey);
+}
 
-#board {
+#game-board {
   display: grid;
 }
 
@@ -111,6 +118,8 @@ body > * {
   user-select: none;
   background-image: url('./img/mine.png');
   background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
 .cover {
@@ -130,5 +139,16 @@ body > * {
 }
 
 .cell:hover .cover {
+  border-color: var(--dark-grey) var(--white) var(--white) var(--dark-grey);
+}
+
+#settings-btn {
+  padding: 0.5em;
+  background: var(--light-grey);
+  border-width: 0.35rem;
+  border-style: solid;
+  border-color: var(--white) var(--dark-grey) var(--dark-grey) var(--white);
+}
+#settings-btn:hover {
   border-color: var(--dark-grey) var(--white) var(--white) var(--dark-grey);
 }

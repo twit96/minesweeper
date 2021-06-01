@@ -6,8 +6,8 @@ var grid;
 
 var scoreboard = document.getElementById("scoreboard");
 var mine_count = document.getElementById('mine-count');
-var button = document.querySelector('button');  // smiley button
-var board = document.getElementById('board');  // game board
+var button = document.getElementById('smiley-btn');
+var board = document.getElementById('game-board');  // game board
 
 function setPresets(difficulty) {
   var presets = {
