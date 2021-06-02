@@ -14,7 +14,7 @@ var board = document.getElementById('game-board');
 var difficulties = ['easy', 'intermediate', 'expert'];
 var diff_idx = 0;
 mine_count.addEventListener("click", function() {
-  window.navigator.vibrate(50); // vibrate for 50ms
+  //window.navigator.vibrate(50); // vibrate for 50ms
   diff_idx = (diff_idx + 1) % difficulties.length;
   difficulty = difficulties[diff_idx];
   configureGame(difficulty);
@@ -169,7 +169,7 @@ configureGame(difficulty);
 // setInterval(configureGame, 2000);
 
 smiley_btn.addEventListener("click", function() {
-  window.navigator.vibrate(50); // vibrate for 50ms
+  //window.navigator.vibrate(50); // vibrate for 50ms
   configureGame(difficulty);
 });
 
@@ -225,7 +225,7 @@ function clickCell(cell, cell_id) {
 
 
 function hitMine(cell) {
-  window.navigator.vibrate(250); // vibrate for 250ms
+  //window.navigator.vibrate(250); // vibrate for 250ms
   cell.style.backgroundColor = '#ff0000';
   smiley_btn.style.backgroundImage = 'url(./img/face-frown.png)';
   uncoverBoard();
