@@ -1,7 +1,7 @@
 var body = document.querySelector('body');
 var scoreboard = document.getElementById("scoreboard");
 var board = document.getElementById('game-board');
-var settings = document.getElementById('settings-btn');
+var settings = document.getElementById('settings');
 
 var body_width;
 var body_height;
@@ -29,7 +29,7 @@ function setDimensions() {
   scoreboard.style.width = view_min + "px";
   board.style.height = view_min + "px";
   board.style.width = view_min + "px";
-  // settings.style.width = view_min + "px";
+  settings.style.width = view_min + "px";
   settings.style.marginTop = body_padding + "px";
 
   if (
@@ -62,7 +62,7 @@ window.addEventListener('resize', function() {
 
 setDimensions();
 
-var button = document.getElementById('smiley-btn');
-button.addEventListener("click", function(){
+var smiley_btn = document.getElementById('smiley-btn');
+smiley_btn.addEventListener("click", function(){
   setDimensions();
 }, false);

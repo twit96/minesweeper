@@ -1,4 +1,4 @@
-var difficulty = 'intermediate';
+var difficulty = 'easy';
 var num_rows;
 var num_cols;
 var num_mines;
@@ -6,8 +6,57 @@ var grid;
 
 var scoreboard = document.getElementById("scoreboard");
 var mine_count = document.getElementById('mine-count');
-var button = document.getElementById('smiley-btn');
-var board = document.getElementById('game-board');  // game board
+var smiley_btn = document.getElementById('smiley-btn');
+var time_count = document.getElementById('time-count');
+var board = document.getElementById('game-board');
+
+
+var difficulties = ['easy', 'intermediate', 'expert'];
+var diff_idx = 0;
+mine_count.addEventListener("click", function() {
+  window.navigator.vibrate(50); // vibrate for 50ms
+  diff_idx = (diff_idx + 1) % difficulties.length;
+  difficulty = difficulties[diff_idx];
+  configureGame(difficulty);
+  setDimensions();
+});
+
+
+var time;
+var timer;
+var timer_active = false;
+
+function startTimer() {
+  resetTime();
+  timer_active = true;
+  timer = setInterval(function() {
+    updateTimer();
+  }, 1000);
+}
+
+function updateTimer() {
+ time++;
+ if (time == 999) { stopTimer(); }
+ var time_string = String(time);
+ while (time_string.length != 3) { time_string = '0' + time_string; }
+ time_count.innerHTML = time_string;
+}
+
+function stopTimer() {
+  if (timer) {
+    clearInterval(timer);
+    timer = false;
+    timer_active = false;
+  }
+}
+
+function resetTime() {
+  time = 0;
+  if (timer) { stopTimer(); }
+  if (timer_active) { timer_active = false; }
+  time_count.innerHTML = '000';
+}
+
 
 function setPresets(difficulty) {
   var presets = {
@@ -27,8 +76,7 @@ function setPresets(difficulty) {
   board.style.gridTemplateRows = 'repeat(' + num_rows + ', 1fr)';
   // reset scoreboard
   mine_count.innerHTML = '0' + num_mines;
-  button.style.backgroundImage = 'url(./img/face-smile.png)';
-
+  smiley_btn.style.backgroundImage = 'url(./img/face-smile.png)';
 }
 
 
@@ -96,7 +144,6 @@ function configureBoard() {
       cell.classList.add('cell');
       cell.innerHTML = grid[r][c];
       cell.setAttribute('onclick', 'clickCell(this, this.id)');
-
       cell.classList.add('num' + grid[r][c]);
 
       var cover = document.createElement('span');
@@ -110,6 +157,7 @@ function configureBoard() {
 
 
 function configureGame(difficulty) {
+  resetTime();
   setPresets(difficulty);
   generateBoard();
   generateMines();
@@ -120,13 +168,15 @@ function configureGame(difficulty) {
 configureGame(difficulty);
 // setInterval(configureGame, 2000);
 
-button.addEventListener("click", function(){
+smiley_btn.addEventListener("click", function() {
   window.navigator.vibrate(50); // vibrate for 50ms
   configureGame(difficulty);
-}, false);
+});
 
 
 function clickCell(cell, cell_id) {
+  // Start Timer if Needed
+  if (!timer_active) { startTimer(); }
 
   // Update Cell
   var cell_cover = cell.querySelector('.cover');
@@ -175,10 +225,14 @@ function clickCell(cell, cell_id) {
 
 
 function hitMine(cell) {
-  console.log('mine hit!');
   window.navigator.vibrate(250); // vibrate for 250ms
   cell.style.backgroundColor = '#ff0000';
-  button.style.backgroundImage = 'url(./img/face-frown.png)';
+  smiley_btn.style.backgroundImage = 'url(./img/face-frown.png)';
+  uncoverBoard();
+  stopTimer();
+}
+
+function uncoverBoard() {
   var covers = document.getElementsByClassName('cover');
   var parent;
   while (covers.length > 0) {
