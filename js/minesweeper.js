@@ -239,7 +239,6 @@ function clickCell(cell, cell_id) {
 }
 
 function hitMine(cell) {
-  vibrateDevice(250); // vibrate for 250ms
   cell.style.backgroundColor = '#ff0000';
   smiley_btn.style.backgroundImage = 'url(./img/face-frown.png)';
   uncoverBoard('lose');
@@ -266,6 +265,7 @@ function checkWin() {
 }
 
 function uncoverBoard(result) {
+  vibrateDevice(250); // vibrate for 250ms
   var covers = document.getElementsByClassName('cover');
   var parent;
   while (covers.length > 0) {
