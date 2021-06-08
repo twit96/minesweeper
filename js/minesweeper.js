@@ -28,6 +28,21 @@ mine_count.addEventListener("click", function() {
 });
 
 
+var can_sink_count = false;  // controls sinkMineCount() setTimeout ability
+function sinkMineCount() {
+  if (
+    (can_sink_count) &&
+    (mine_count.innerHTML != '000')
+  ) {
+    mine_count.innerHTML--;
+    while (mine_count.innerHTML.length < 3) {
+      mine_count.innerHTML = '0' + String(mine_count.innerHTML);
+    }
+    setTimeout(sinkMineCount, 10);
+  }
+}
+
+
 var time;
 var timer;
 var timer_active = false;
@@ -81,10 +96,10 @@ function setPresets(difficulty) {
   board.style.gridTemplateColumns = 'repeat(' + num_cols + ', 1fr)';
   board.style.gridTemplateRows = 'repeat(' + num_rows + ', 1fr)';
   // reset scoreboard
+  can_sink_count = false;  // disallow mine counter setTimeout decrement
   mine_count.innerHTML = '0' + num_mines;
   smiley_btn.style.backgroundImage = 'url(./img/face-smile.png)';
 }
-
 
 function generateBoard() {
   for (r=0; r<num_rows; r++) {
@@ -94,7 +109,6 @@ function generateBoard() {
     }
   }
 }
-
 
 function generateMines() {
   var rand_row;
@@ -108,7 +122,6 @@ function generateMines() {
   }
 }
 
-
 function generateTileNumbers() {
   for (r=0; r<num_rows; r++) {
     for (c=0; c<num_cols; c++) {
@@ -118,7 +131,6 @@ function generateTileNumbers() {
     }
   }
 }
-
 
 function checkAdjacentTiles(row, col) {
   var mines = 0;
@@ -134,11 +146,9 @@ function checkAdjacentTiles(row, col) {
   grid[row][col] = mines;
 }
 
-
 function clearBoard() {
   while (board.firstChild) { board.removeChild(board.firstChild); }
 }
-
 
 function configureBoard() {
   clearBoard();
@@ -160,7 +170,6 @@ function configureBoard() {
     }
   }
 }
-
 
 function configureGame(difficulty) {
   resetTime();
@@ -199,7 +208,7 @@ function clickCell(cell, cell_id) {
   if (val == 'M') { hitMine(cell); }
 
   // hit nonzero number
-  if (val != 0) { return; }
+  else if (val != 0) { checkWin(); }
 
   // hit 0 - recursion
   else {
@@ -229,16 +238,34 @@ function clickCell(cell, cell_id) {
   }
 }
 
-
 function hitMine(cell) {
   vibrateDevice(250); // vibrate for 250ms
   cell.style.backgroundColor = '#ff0000';
   smiley_btn.style.backgroundImage = 'url(./img/face-frown.png)';
-  uncoverBoard();
+  uncoverBoard('lose');
   stopTimer();
 }
 
-function uncoverBoard() {
+function checkWin() {
+  for (r=0; r<num_rows; r++) {
+    for (c=0; c<num_cols; c++) {
+      var curr_cell = document.getElementById('c-' + String(r) + '-' + String(c));
+      if (
+        (grid[r][c] != 'M') &&
+        (curr_cell.querySelector('.cover') != null)
+      ) {
+        return;  // player has not uncovered all mines
+      }
+    }
+  }
+  // player has won
+  stopTimer();
+  uncoverBoard('win');
+  can_sink_count = true;  // allow mine counter setTimeout decrement
+  sinkMineCount();
+}
+
+function uncoverBoard(result) {
   var covers = document.getElementsByClassName('cover');
   var parent;
   while (covers.length > 0) {
@@ -246,5 +273,18 @@ function uncoverBoard() {
     parent.removeChild(covers[0]);
     parent.onclick = null;
     parent.classList.add('clicked');
+
+    if (
+      (result == 'win') &&
+      (parent.innerHTML[0] == 'M')
+    ) {
+      var cover = document.createElement('span');
+      cover.classList.add('flag-cover');
+      cover.style.backgroundImage = './img/flag.png';
+      cover.style.cursor = 'default';
+      parent.insertAdjacentElement('beforeend', cover);
+
+      parent.style.background = 'var(--light-grey)';  // bugfix - remove mine img
+    }
   }
 }

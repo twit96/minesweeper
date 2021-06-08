@@ -120,8 +120,9 @@ body > * {
   background-repeat: no-repeat;
 }
 
-.cover {
-  /* display: none; */
+.cover,
+.flag-cover {
+  /* opacity: 0.5; */
   position: absolute;
   top: 0;
   right: 0;
@@ -140,12 +141,18 @@ body > * {
   border-color: var(--dark-grey) var(--white) var(--white) var(--dark-grey);
 }
 
+.flag-cover {
+  background-image: url('./img/flag.png');
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
 #settings {
   padding: 0.5em;
 }
 
 #settings-btn {
-
   background: var(--light-grey);
   border-width: 0.35rem;
   border-style: solid;
