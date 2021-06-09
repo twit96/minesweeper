@@ -259,6 +259,7 @@ function checkWin() {
   }
   // player has won
   stopTimer();
+  smiley_btn.style.backgroundImage = 'url(./img/face-cool.png)';
   uncoverBoard('win');
   can_sink_count = true;  // allow mine counter setTimeout decrement
   sinkMineCount();
