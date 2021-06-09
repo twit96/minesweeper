@@ -46,7 +46,25 @@ body {
   height: 100vh;
 }
 
-body > * {
+button {
+  cursor: pointer;
+  border: 0;
+  outline: 0;
+  border-width: min(0.25em, 0.5rem);
+  border-style: solid;
+  border-color: var(--white) var(--dark-grey) var(--dark-grey) var(--white);
+  background-color: var(--light-grey);
+}
+button:hover {
+  border-color: var(--dark-grey) var(--white) var(--white) var(--dark-grey);
+}
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 0;
+}
+
+#scoreboard,
+#game-board {
   border-width: 0.35rem;
   border-style: solid;
   border-color: var(--dark-grey) var(--white) var(--white) var(--dark-grey);
@@ -70,22 +88,12 @@ body > * {
 #mine-count { cursor: pointer; }
 
 #smiley-btn {
-  cursor: pointer;
   height: 2.5em;
   width: 2.5em;
-  border: 0;
-  outline: 0;
-  background-color: var(--light-grey);
   background-image: url('./img/face-smile.png');
   background-size: contain;
   background-position: center;
   background-repeat: no-repeat;
-  border-width: min(0.25em, 0.5rem);
-  border-style: solid;
-  border-color: var(--white) var(--dark-grey) var(--dark-grey) var(--white);
-}
-#smiley-btn:hover {
-  border-color: var(--dark-grey) var(--white) var(--white) var(--dark-grey);
 }
 
 #game-board {
@@ -148,16 +156,54 @@ body > * {
   background-repeat: no-repeat;
 }
 
-#settings {
-  padding: 0.5em;
+
+#help-btn {
+  padding: 0.25em 0.5em;
+  font-weight: bold;
 }
 
-#settings-btn {
-  background: var(--light-grey);
+
+#settings-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: #000000aa;
+  z-index: 1;
+  display: none;
+}
+
+#settings {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
   border-width: 0.35rem;
   border-style: solid;
   border-color: var(--white) var(--dark-grey) var(--dark-grey) var(--white);
+  background: var(--light-grey);
+  text-align: center;
+  z-index: 2;
+  display: none;
+  /* display: flex; */
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
 }
-#settings-btn:hover {
-  border-color: var(--dark-grey) var(--white) var(--white) var(--dark-grey);
+
+#settings > * {
+  margin: 1rem;
+}
+
+#settings p {
+  text-align: left;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: min(45em, 90vw);
+}
+
+#settings button {
+  padding: 0.25em 0.5em;
+  font-weight: bold;
 }

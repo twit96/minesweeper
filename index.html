@@ -10,6 +10,7 @@
     <link rel="stylesheet" type="text/css" href="main.css" />
     <script src="./js/minesweeper.js" defer></script>
     <script src="./js/styles.js" defer></script>
+    <script src="./js/settings.js" defer></script>
   </head>
 
   <body>
@@ -19,14 +20,39 @@
       <span id="time-count">000</span>
     </div>
     <div id="game-board"></div>
+    <button id="help-btn">Help</button>
+
+    <div id="settings-bg"></div>
     <div id="settings">
-      <!-- <button id="help-btn">Help</button> -->
-    </div>
-    <!-- <div id="settings">
       <header>
         <h1>Minesweeper</h1>
       </header>
-    </div> -->
+      <p>
+        Click on a tile to uncover it. Avoid uncovering tiles with mines
+        underneath them (your first move will be random). If the tile contains a
+        number, it indicates how many mines will be found in the tiles adjacent
+        to it. Use these numbers as clues to uncover other safe tiles.
+      </p>
+      <!-- <p>
+        Long press a tile to mark it with a flag if you know a mine is
+        underneath it. Once all mines have been found, you have won the game!
+      </p> -->
+      <p>
+        The number in the top left of the screen indicates the number of
+        mines to be found. Click this number to change the game difficulty
+        (by default, it is set to 'easy').
+      </p>
+      <p>
+        The smiley face button in the top-middle of the screen can be clicked to
+        start a new game at any time. Each game board is randomly generated.
+      </p>
+      <p>
+        The number in the top right is a timer, and does not start until you
+        have uncovered your first tile.
+      </p>
+      <button id="settings-btn">Back</button>
+    </div>
+
   </body>
 
 </html>

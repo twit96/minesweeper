@@ -17,7 +17,7 @@ function vibrateDevice(duration) {
 }
 
 
-var difficulties = ['easy', 'intermediate', 'expert'];
+const difficulties = ['easy', 'intermediate', 'expert'];
 var diff_idx = 0;
 mine_count.addEventListener("click", function() {
   vibrateDevice(50); // vibrate for 50ms
@@ -253,7 +253,7 @@ function checkWin() {
         (grid[r][c] != 'M') &&
         (curr_cell.querySelector('.cover') != null)
       ) {
-        return;  // player has not uncovered all mines
+        return;  // player has not located all mines
       }
     }
   }
