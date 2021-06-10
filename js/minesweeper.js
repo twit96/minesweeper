@@ -178,13 +178,9 @@ function configureBoard() {
       // short press uncovers cell and long press flags cell functionality
       cell.addEventListener('mousedown', cellMousedown);
       cell.addEventListener('mouseup', cellMouseup);
+      cell.addEventListener('touchstart', cellMousedown);
+      cell.addEventListener('touchend', iOScellClick);
       cell.addEventListener('click', cellClick);
-      // right click flags cell functionality
-      cell.addEventListener('contextmenu', function(ev) {
-        ev.preventDefault();
-        flagCell(this, this.id);
-        return false;
-      });
       cell.classList.add('num' + grid[r][c]);
 
       var cover = document.createElement('span');
@@ -225,7 +221,7 @@ function cellMousedown() {
 
 function cellMouseup() {
   end_time = new Date().getTime();
-  long_press = (end_time - start_time < 500) ? false : true;
+  long_press = (end_time - start_time < 300) ? false : true;
 }
 
 function cellClick() {
@@ -236,7 +232,18 @@ function cellClickAlt() {
   if (long_press) flagCell(this, this.id);
 }
 
+function iOScellClick() {
+  cellMouseup();
+  cellClick();
+}
+
+function iOScellClickAlt() {
+  cellMouseup();
+  cellClickAlt();
+}
+
 function flagCell(cell, cell_id) {
+  vibrateDevice(25); // vibrate for 25ms
   var cell_cover = cell.querySelector('.cover');
   var flag_cover = cell.querySelector('.flag-cover');
   if (cell_cover) {
@@ -248,6 +255,8 @@ function flagCell(cell, cell_id) {
     cell.insertAdjacentElement('beforeend', flag_cover);
     cell.removeEventListener('click', cellClick);
     cell.addEventListener('click', cellClickAlt);
+    cell.removeEventListener('touchend', iOScellClick);
+    cell.addEventListener('touchend', iOScellClickAlt);
     subtractMineCount();
   } else {
     cell.removeChild(flag_cover);
@@ -256,6 +265,8 @@ function flagCell(cell, cell_id) {
     cell.insertAdjacentElement('beforeend', cell_cover);
     cell.removeEventListener('click', cellClickAlt);
     cell.addEventListener('click', cellClick);
+    cell.removeEventListener('touchend', iOScellClickAlt);
+    cell.addEventListener('touchend', iOScellClick);
     addMineCount();
   }
 }
@@ -268,7 +279,7 @@ function clickCell(cell, cell_id) {
   var cell_cover = cell.querySelector('.cover');
   if (cell_cover) {
     cell.removeChild(cell_cover);
-    cell.onclick = null;
+    cell.removeEventListener('click', cellClick);
     cell.classList.add('clicked');
   }
 
