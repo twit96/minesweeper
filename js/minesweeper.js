@@ -243,7 +243,7 @@ function iOScellClickAlt() {
 }
 
 function flagCell(cell, cell_id) {
-  vibrateDevice(25); // vibrate for 25ms
+  vibrateDevice(50); // vibrate for 50ms
   var cell_cover = cell.querySelector('.cover');
   var flag_cover = cell.querySelector('.flag-cover');
   if (cell_cover) {
