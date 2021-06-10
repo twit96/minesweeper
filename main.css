@@ -138,6 +138,10 @@ h1, h2, h3, h4, h5, h6 {
   left: 0;
 
   background: var(--light-grey);
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+
   border-width: min(0.25em, 0.5rem);
   border-style: solid;
   border-color: var(--white) var(--dark-grey) var(--dark-grey) var(--white);
@@ -151,9 +155,6 @@ h1, h2, h3, h4, h5, h6 {
 
 .flag-cover {
   background-image: url('./img/flag.png');
-  background-size: contain;
-  background-position: center;
-  background-repeat: no-repeat;
 }
 
 

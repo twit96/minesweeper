@@ -28,16 +28,31 @@ mine_count.addEventListener("click", function() {
 });
 
 
+var remaining_mines;
+function subtractMineCount() {
+  remaining_mines--;
+  mine_count.innerHTML = Math.max(remaining_mines, 0);
+  while (mine_count.innerHTML.length < 3) {
+    mine_count.innerHTML = '0' + String(mine_count.innerHTML);
+  }
+}
+
+function addMineCount() {
+  remaining_mines++;
+  if (remaining_mines > 0) { mine_count.innerHTML = remaining_mines; }
+  else { mine_count.innerHTML = 0 };
+  while (mine_count.innerHTML.length < 3) {
+    mine_count.innerHTML = '0' + String(mine_count.innerHTML);
+  }
+}
+
 var can_sink_count = false;  // controls sinkMineCount() setTimeout ability
 function sinkMineCount() {
   if (
     (can_sink_count) &&
     (mine_count.innerHTML != '000')
   ) {
-    mine_count.innerHTML--;
-    while (mine_count.innerHTML.length < 3) {
-      mine_count.innerHTML = '0' + String(mine_count.innerHTML);
-    }
+    subtractMineCount();
     setTimeout(sinkMineCount, 10);
   }
 }
@@ -91,6 +106,7 @@ function setPresets(difficulty) {
   num_rows = choice[0];
   num_cols = choice[1];
   num_mines = choice[2];
+  remaining_mines = choice[2];
   grid = [];
   // update board layout
   board.style.gridTemplateColumns = 'repeat(' + num_cols + ', 1fr)';
@@ -159,7 +175,16 @@ function configureBoard() {
       cell.setAttribute('id', cell_id);
       cell.classList.add('cell');
       cell.innerHTML = grid[r][c];
-      cell.setAttribute('onclick', 'clickCell(this, this.id)');
+      // short press uncovers cell and long press flags cell functionality
+      cell.addEventListener('mousedown', cellMousedown);
+      cell.addEventListener('mouseup', cellMouseup);
+      cell.addEventListener('click', cellClick);
+      // right click flags cell functionality
+      cell.addEventListener('contextmenu', function(ev) {
+        ev.preventDefault();
+        flagCell(this, this.id);
+        return false;
+      });
       cell.classList.add('num' + grid[r][c]);
 
       var cover = document.createElement('span');
@@ -188,6 +213,52 @@ smiley_btn.addEventListener("click", function() {
   configureGame(difficulty);
 });
 
+
+// variables for storing if user long clicks a cell
+var start_time;
+var end_time;
+var long_press = false;
+
+function cellMousedown() {
+  start_time = new Date().getTime();
+}
+
+function cellMouseup() {
+  end_time = new Date().getTime();
+  long_press = (end_time - start_time < 500) ? false : true;
+}
+
+function cellClick() {
+  (long_press) ? flagCell(this, this.id) : clickCell(this, this.id);
+}
+
+function cellClickAlt() {
+  if (long_press) flagCell(this, this.id);
+}
+
+function flagCell(cell, cell_id) {
+  var cell_cover = cell.querySelector('.cover');
+  var flag_cover = cell.querySelector('.flag-cover');
+  if (cell_cover) {
+    cell.removeChild(cell_cover);
+    flag_cover = document.createElement('span');
+    flag_cover.classList.add('flag-cover');
+    flag_cover.style.backgroundImage = './img/flag.png';
+    flag_cover.style.cursor = 'default';
+    cell.insertAdjacentElement('beforeend', flag_cover);
+    cell.removeEventListener('click', cellClick);
+    cell.addEventListener('click', cellClickAlt);
+    subtractMineCount();
+  } else {
+    cell.removeChild(flag_cover);
+    cell_cover = document.createElement('span');
+    cell_cover.classList.add('cover');
+    cell.insertAdjacentElement('beforeend', cell_cover);
+    cell.removeEventListener('click', cellClickAlt);
+    cell.addEventListener('click', cellClick);
+    addMineCount();
+  }
+}
 
 function clickCell(cell, cell_id) {
   // Start Timer if Needed
