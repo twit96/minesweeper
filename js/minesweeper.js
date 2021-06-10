@@ -16,6 +16,11 @@ function vibrateDevice(duration) {
   if (can_vibrate) window.navigator.vibrate(duration);
 }
 
+// used to know which event listeners to use for long press
+const is_iOS = (/iPad|iPhone|iPod/.test(navigator.platform) ||
+(navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1)) &&
+!window.MSStream;
+
 
 const difficulties = ['easy', 'intermediate', 'expert'];
 var diff_idx = 0;
@@ -176,15 +181,15 @@ function configureBoard() {
       cell.classList.add('cell');
       cell.innerHTML = grid[r][c];
       // short press uncovers cell and long press flags cell functionality
-      cell.addEventListener('mousedown', cellMousedown);
-      cell.addEventListener('mouseup', cellMouseup);
-      cell.addEventListener('click', cellClick);
-      // right click flags cell functionality
-      cell.addEventListener('contextmenu', function(ev) {
-        ev.preventDefault();
-        flagCell(this, this.id);
-        return false;
-      });
+      if (is_iOS) {
+        cell.addEventListener('touchstart', cellMousedown);
+        cell.addEventListener('touchend', iOScellClick);
+      } else {
+        cell.addEventListener('mousedown', cellMousedown);
+        cell.addEventListener('mouseup', cellMouseup);
+        cell.addEventListener('click', cellClick);
+      }
+
       cell.classList.add('num' + grid[r][c]);
 
       var cover = document.createElement('span');
@@ -236,6 +241,7 @@ function cellClickAlt() {
   if (long_press) flagCell(this, this.id);
 }
 
+
 function flagCell(cell, cell_id) {
   vibrateDevice(25); // vibrate for 25ms
   var cell_cover = cell.querySelector('.cover');
@@ -247,16 +253,27 @@ function flagCell(cell, cell_id) {
     flag_cover.style.backgroundImage = './img/flag.png';
     flag_cover.style.cursor = 'default';
     cell.insertAdjacentElement('beforeend', flag_cover);
-    cell.removeEventListener('click', cellClick);
-    cell.addEventListener('click', cellClickAlt);
+    if (is_iOS) {
+      cell.removeEventListener('touchend', iOScellClick);
+      cell.addEventListener('touchend', iOScellClickAlt);
+    } else {
+      cell.removeEventListener('click', cellClick);
+      cell.addEventListener('click', cellClickAlt);
+    }
     subtractMineCount();
   } else {
     cell.removeChild(flag_cover);
     cell_cover = document.createElement('span');
     cell_cover.classList.add('cover');
     cell.insertAdjacentElement('beforeend', cell_cover);
-    cell.removeEventListener('click', cellClickAlt);
-    cell.addEventListener('click', cellClick);
+    if (is_iOS) {
+      cell.removeEventListener('touchend', iOScellClickAlt);
+      cell.addEventListener('touchend', iOScellClick);
+    } else {
+      cell.removeEventListener('click', cellClickAlt);
+      cell.addEventListener('click', cellClick);
+    }
+
     addMineCount();
   }
 }
