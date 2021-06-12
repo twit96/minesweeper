@@ -243,6 +243,27 @@ h1, h2, h3, h4, h5, h6 {
 }
 #settings div * { margin: 0 1rem; }
 
+#settings table {
+  border-collapse: collapse;
+  font-size: 75%;
+  border: thin solid var(--dark-grey);
+}
+
+#settings table th,
+#settings table td {
+  padding: 0.25rem;
+}
+
+#settings table tr:first-of-type {
+  border-bottom: thin solid var(--dark-grey);
+}
+
+#settings table th,
+#settings table td {
+  text-align: left;
+  border-right: thin solid var(--dark-grey);
+}
+
 #settings footer {
   width: calc(100% - 2rem);
   border-width: thin 0;

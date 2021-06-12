@@ -13,7 +13,7 @@
 		<meta name="author" content="Tyler Wittig" />
 		<!--  -->
     <link rel="icon" href="./img/flag.png" />
-    <link rel="stylesheet" type="text/css" href="main.css?v=20210611.1" />
+    <link rel="stylesheet" type="text/css" href="main.css?v=20210611.2" />
     <script src="./js/minesweeper.js?v=20210611.1" defer></script>
     <script src="./js/styles.js" defer></script>
     <script src="./js/settings.js?v=20210611" defer></script>
@@ -73,9 +73,36 @@
       <hr />
       <p>
         The number in the top-left of the screen indicates the number of
-        mines to be found. Click this number to change the game difficulty
-        (by default, it is set to 'easy').
+        mines to be found. Click this number to change the game difficulty at
+        any time (NOTE: this starts a new game with a new board). By default,
+        the game is set to "Easy".
       </p>
+      <table>
+        <tr>
+          <th>Difficulty</th>
+          <th>Mines</th>
+          <th>Rows</th>
+          <th>Columns</th>
+        </tr>
+        <tr>
+          <td>Easy</td>
+          <td>10</td>
+          <td>10</td>
+          <td>10</td>
+        </tr>
+        <tr>
+          <td>Intermediate</td>
+          <td>40</td>
+          <td>16</td>
+          <td>16</td>
+        </tr>
+        <tr>
+          <td>Expert</td>
+          <td>99</td>
+          <td>30</td>
+          <td>16</td>
+        </tr>
+      </table>
       <img src="./img/tutorial-numbers.png" alt="Scoreboard Numbers Image" />
       <p>
         The number in the top-right is a timer which starts when you have
