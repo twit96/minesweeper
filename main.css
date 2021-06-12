@@ -313,6 +313,7 @@ img.icon {
 
 #orientation-lock > * {
   margin-bottom: 1rem;
+  max-width: 35em;
 }
 
 #orientation-lock span {
