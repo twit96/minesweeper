@@ -23,9 +23,11 @@ var wants_vibrate = true;
 
 vibration_toggle.addEventListener("click", function() {
   wants_vibrate = !wants_vibrate;
-  if (wants_vibrate) { vibration_toggle.innerHTML = 'Vibration On'; }
+  if (wants_vibrate) {
+    vibrateDevice(25); // vibrate for 25ms
+    vibration_toggle.innerHTML = 'Vibration On';
+  }
   else { vibration_toggle.innerHTML = 'Vibration Off'; }
-  console.log(wants_vibrate);
   vibration_toggle.classList.toggle('disabled');
 });
 

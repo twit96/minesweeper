@@ -26,7 +26,6 @@
   --white: #ffffff;
   --light-grey: #c0c0c0;
   --dark-grey: #808080;
-  /* --yellow: #ffff0a; */
 }
 
 * {
@@ -46,6 +45,13 @@ body {
   height: 100vh;
   overflow-x: hidden;
 }
+
+a {
+  color: #0000ff;
+  font-size: 90%;
+  text-decoration: none;
+}
+a:hover { text-decoration: underline; }
 
 button {
   cursor: pointer;
@@ -212,7 +218,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 #settings img { max-width: calc(100% - 2em); }
-#settings img.outlined {
+#settings .outlined {
   border-width: min(0.25em, 0.5rem);
   border-style: solid;
   border-color: var(--white) var(--dark-grey) var(--dark-grey) var(--white);
@@ -223,10 +229,7 @@ h1, h2, h3, h4, h5, h6 {
   width: 2.5rem;
 }
 
-#settings hr {
-  width: calc(100% - 2rem);
-  background: var(--dark-grey);
-}
+#settings hr { width: calc(100% - 2rem); }
 
 #settings p {
   text-align: left;
@@ -239,6 +242,16 @@ h1, h2, h3, h4, h5, h6 {
   width: 100%;
 }
 #settings div * { margin: 0 1rem; }
+
+#settings footer {
+  width: calc(100% - 2rem);
+  border-width: thin 0;
+  border-style: solid;
+  border-color: var(--dark-grey);
+  padding: 0.5rem 0;
+  margin-bottom: 0;
+  font-size: 75%;
+}
 
 #settings div.button-container {
   justify-content: space-between;
