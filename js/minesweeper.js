@@ -7,13 +7,30 @@ var grid;
 var scoreboard = document.getElementById("scoreboard");
 var mine_count = document.getElementById('mine-count');
 var smiley_btn = document.getElementById('smiley-btn');
+var tap_switcher = document.getElementById('tap-switcher');
 var time_count = document.getElementById('time-count');
 var board = document.getElementById('game-board');
+var vibration_toggle = document.getElementById('vibration-toggle');
 
 
-const can_vibrate = window.navigator.vibrate
+var can_vibrate = window.navigator.vibrate;
+if (!can_vibrate) {
+  // disable vibration toggle if device doesn't support navigator.vibrate
+  vibration_toggle.style.display = 'none';
+  vibration_toggle.parentNode.style.justifyContent = 'center';
+}
+var wants_vibrate = true;
+
+vibration_toggle.addEventListener("click", function() {
+  wants_vibrate = !wants_vibrate;
+  if (wants_vibrate) { vibration_toggle.innerHTML = 'Vibration On'; }
+  else { vibration_toggle.innerHTML = 'Vibration Off'; }
+  console.log(wants_vibrate);
+  vibration_toggle.classList.toggle('disabled');
+});
+
 function vibrateDevice(duration) {
-  if (can_vibrate) window.navigator.vibrate(duration);
+  if (can_vibrate && wants_vibrate) window.navigator.vibrate(duration);
 }
 
 
@@ -214,7 +231,16 @@ smiley_btn.addEventListener("click", function() {
 });
 
 
-// variables for storing if user long clicks a cell
+// allow user to toggle between flagging and uncovering cells
+var flag_instead = false;
+tap_switcher.addEventListener("click", function() {
+  vibrateDevice(25); // vibrate for 25ms
+  tap_switcher.classList.toggle('flag');
+  flag_instead = !flag_instead;
+});
+
+
+// variables to store if user long clicks a cell (alt for tap_switcher button)
 var start_time;
 var end_time;
 var long_press = false;
@@ -229,11 +255,11 @@ function cellMouseup() {
 }
 
 function cellClick() {
-  (long_press) ? flagCell(this, this.id) : clickCell(this, this.id);
+  (long_press || flag_instead) ? flagCell(this, this.id) : clickCell(this, this.id);
 }
 
 function cellClickAlt() {
-  if (long_press) flagCell(this, this.id);
+  if (long_press || flag_instead) flagCell(this, this.id);
 }
 
 function flagCell(cell, cell_id) {

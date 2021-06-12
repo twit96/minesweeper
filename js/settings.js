@@ -15,3 +15,8 @@ settings_btn.onclick = function() {
   settings_bg.style.display = 'none';
   settings.style.display = 'none';
 }
+
+settings_bg.onclick = function() {
+  settings_bg.style.display = 'none';
+  settings.style.display = 'none';
+}

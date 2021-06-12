@@ -44,6 +44,7 @@ body {
   justify-content: center;
   width: 100vw;
   height: 100vh;
+  overflow-x: hidden;
 }
 
 button {
@@ -87,14 +88,20 @@ h1, h2, h3, h4, h5, h6 {
 
 #mine-count { cursor: pointer; }
 
-#smiley-btn {
+
+#scoreboard button {
   height: 2.5em;
   width: 2.5em;
-  background-image: url('./img/face-smile.png');
   background-size: contain;
   background-position: center;
   background-repeat: no-repeat;
 }
+#smiley-btn {
+  margin-right: 0.5em;
+  background-image: url('./img/face-smile.png');
+}
+#tap-switcher { background-image: url('./img/mine.png'); }
+#tap-switcher.flag { background-image: url('./img/flag.png'); }
 
 #game-board {
   display: grid;
@@ -153,6 +160,11 @@ h1, h2, h3, h4, h5, h6 {
   border-color: var(--dark-grey) var(--white) var(--white) var(--dark-grey);
 }
 
+.cell.flag:hover .cover {
+  background-image: url('./img/flag.png');
+  background-blend-mode: color-dodge;
+}
+
 .flag-cover {
   background-image: url('./img/flag.png');
 }
@@ -199,8 +211,37 @@ h1, h2, h3, h4, h5, h6 {
   margin: 1rem;
 }
 
+#settings img { max-width: calc(100% - 2em); }
+#settings img.outlined {
+  border-width: min(0.25em, 0.5rem);
+  border-style: solid;
+  border-color: var(--white) var(--dark-grey) var(--dark-grey) var(--white);
+  background-color: var(--light-grey);
+}
+#settings img.icon {
+  height: 2.5rem;
+  width: 2.5rem;
+}
+
+#settings hr {
+  width: calc(100% - 2rem);
+  background: var(--dark-grey);
+}
+
 #settings p {
   text-align: left;
+}
+
+#settings div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+#settings div * { margin: 0 1rem; }
+
+#settings div.button-container {
+  justify-content: space-between;
 }
 
 #settings button {

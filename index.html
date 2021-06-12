@@ -4,7 +4,6 @@
   <head>
     <meta charset="utf-8" />
     <title>Minesweeper</title>
-    <meta name="description" content="Minesweeper Game"/>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- Social Media Card -->
 		<meta name="title" property="og:title" content="Minesweeper" />
@@ -14,16 +13,19 @@
 		<meta name="author" content="Tyler Wittig" />
 		<!--  -->
     <link rel="icon" href="./img/flag.png" />
-    <link rel="stylesheet" type="text/css" href="main.css" />
-    <script src="./js/minesweeper.js?v=20210609.02" defer></script>
+    <link rel="stylesheet" type="text/css" href="main.css?v=20210611" />
+    <script src="./js/minesweeper.js?v=20210611" defer></script>
     <script src="./js/styles.js" defer></script>
-    <script src="./js/settings.js" defer></script>
+    <script src="./js/settings.js?v=20210611" defer></script>
   </head>
 
   <body>
     <div id="scoreboard">
       <span id="mine-count">000</span>
-      <button id="smiley-btn"></button>
+      <div>
+        <button id="smiley-btn"></button>
+        <button id="tap-switcher"></button>
+      </div>
       <span id="time-count">000</span>
     </div>
     <div id="game-board"></div>
@@ -34,33 +36,57 @@
       <header>
         <h1>Minesweeper</h1>
       </header>
+      <hr />
       <p>
         Click on a tile to uncover it. Avoid uncovering tiles with mines
         underneath them (your first move will be random). If the tile contains a
         number, it indicates how many mines will be found in the tiles adjacent
         to it. Use these numbers as clues to uncover other safe tiles.
       </p>
+      <img src="./img/tutorial-cells.png" alt="Cells Image" class="outlined" />
       <p>
-        Long press or right click on a tile to mark it with a flag when you know
-        a mine is underneath it. Once all safe tiles have been uncovered, you
-        have won the game!
+        <b>Once all safe tiles have been uncovered, you have won the game!</b>
       </p>
+      <hr />
       <p>
-        The number in the top left of the screen indicates the number of
-        mines to be found. Click this number to change the game difficulty
-        (by default, it is set to 'easy').
+        Click the mine button in the top-middle of the screen to allow yourself
+        to mark tiles with flags where you know the mines are. (The button
+        toggles whether clicking a cell uncovers it or places a flag.)
       </p>
+      <div>
+        <img src="./img/mine.png" alt="Mine Button Image" class="outlined icon" />
+        /
+        <img src="./img/flag.png" alt="Flag Button Image" class="outlined icon" />
+      </div>
+      <p>
+        <i>
+          You can also long press or right click on the tiles to mark them with
+          flags on desktop and android.
+        </i>
+      </p>
+      <hr />
       <p>
         The smiley face button in the top-middle of the screen can be clicked to
         start a new game at any time. Each game board is randomly generated.
       </p>
+      <img src="./img/face-smile.png" alt="Smiley Button Image" class="outlined icon" />
+      <hr />
       <p>
-        The number in the top right is a timer, and does not start until you
-        have uncovered your first tile.
+        The number in the top-left of the screen indicates the number of
+        mines to be found. Click this number to change the game difficulty
+        (by default, it is set to 'easy').
       </p>
-      <button id="settings-btn">Back</button>
+      <img src="./img/tutorial-numbers.png" alt="Scoreboard Numbers Image" />
+      <p>
+        The number in the top-right is a timer which starts when you have
+        uncovered your first tile and stops when you have located all mines.
+      </p>
+      <hr />
+      <div class="button-container">
+        <button id="vibration-toggle">Vibration On</button>
+        <button id="settings-btn">Back</button>
+      </div>
     </div>
 
   </body>
-
 </html>
