@@ -265,10 +265,10 @@ function cellClickAlt() {
 }
 
 function flagCell(cell, cell_id) {
-  vibrateDevice(25); // vibrate for 25ms
   var cell_cover = cell.querySelector('.cover');
   var flag_cover = cell.querySelector('.flag-cover');
   if (cell_cover) {
+    vibrateDevice(25); // vibrate for 25ms
     cell.removeChild(cell_cover);
     flag_cover = document.createElement('span');
     flag_cover.classList.add('flag-cover');
@@ -279,6 +279,7 @@ function flagCell(cell, cell_id) {
     cell.addEventListener('click', cellClickAlt);
     subtractMineCount();
   } else if (flag_cover) {
+    vibrateDevice(25); // vibrate for 25ms
     cell.removeChild(flag_cover);
     cell_cover = document.createElement('span');
     cell_cover.classList.add('cover');
