@@ -105,6 +105,14 @@ function stopTimer() {
   }
 }
 
+function resumeTimer() {
+  // if user opens settings during game, resume timer without resetting time
+  timer_active = true;
+  timer = setInterval(function() {
+    updateTimer();
+  }, 1000);
+}
+
 function resetTime() {
   time = 0;
   if (timer) { stopTimer(); }
