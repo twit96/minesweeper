@@ -21,11 +21,11 @@ settings_bg.onclick = function() {
 function showSettings() {
   settings_bg.style.display = 'block';
   settings.style.display = 'flex';
-  stopTimer();
+  pauseTimer();
 }
 
 function hideSettings() {
   settings_bg.style.display = 'none';
   settings.style.display = 'none';
-  if (time != 0) resumeTimer();
+  if (timer_active) resumeTimer();
 }

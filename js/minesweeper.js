@@ -3,6 +3,7 @@ var num_rows;
 var num_cols;
 var num_mines;
 var grid;
+var game_active = false;
 
 var scoreboard = document.getElementById("scoreboard");
 var mine_count = document.getElementById('mine-count');
@@ -105,6 +106,13 @@ function stopTimer() {
   }
 }
 
+function pauseTimer() {
+  if (timer) {
+    clearInterval(timer);
+    timer = false;
+  }
+}
+
 function resumeTimer() {
   // if user opens settings during game, resume timer without resetting time
   timer_active = true;
@@ -122,6 +130,7 @@ function resetTime() {
 
 
 function setPresets(difficulty) {
+  game_active = true;
   var presets = {
     // 'difficulty': [rows, cols, mines]
     'easy':          [10, 10, 10],
@@ -273,74 +282,80 @@ function cellClickAlt() {
 }
 
 function flagCell(cell, cell_id) {
-  var cell_cover = cell.querySelector('.cover');
-  var flag_cover = cell.querySelector('.flag-cover');
-  if (cell_cover) {
-    vibrateDevice(25); // vibrate for 25ms
-    cell.removeChild(cell_cover);
-    flag_cover = document.createElement('span');
-    flag_cover.classList.add('flag-cover');
-    flag_cover.style.backgroundImage = './img/flag.png';
-    flag_cover.style.cursor = 'default';
-    cell.insertAdjacentElement('beforeend', flag_cover);
-    cell.removeEventListener('click', cellClick);
-    cell.addEventListener('click', cellClickAlt);
-    subtractMineCount();
-  } else if (flag_cover) {
-    vibrateDevice(25); // vibrate for 25ms
-    cell.removeChild(flag_cover);
-    cell_cover = document.createElement('span');
-    cell_cover.classList.add('cover');
-    cell.insertAdjacentElement('beforeend', cell_cover);
-    cell.removeEventListener('click', cellClickAlt);
-    cell.addEventListener('click', cellClick);
-    addMineCount();
+  if (game_active) {
+    var cell_cover = cell.querySelector('.cover');
+    var flag_cover = cell.querySelector('.flag-cover');
+    if (cell_cover) {
+      vibrateDevice(25); // vibrate for 25ms
+      cell.removeChild(cell_cover);
+      flag_cover = document.createElement('span');
+      flag_cover.classList.add('flag-cover');
+      flag_cover.style.backgroundImage = './img/flag.png';
+      flag_cover.style.cursor = 'default';
+      cell.insertAdjacentElement('beforeend', flag_cover);
+      cell.removeEventListener('click', cellClick);
+      cell.addEventListener('click', cellClickAlt);
+      subtractMineCount();
+      console.log('click')
+    } else if (flag_cover) {
+      vibrateDevice(25); // vibrate for 25ms
+      cell.removeChild(flag_cover);
+      cell_cover = document.createElement('span');
+      cell_cover.classList.add('cover');
+      cell.insertAdjacentElement('beforeend', cell_cover);
+      cell.removeEventListener('click', cellClickAlt);
+      cell.addEventListener('click', cellClick);
+      addMineCount();
+      console.log('click1')
+    }
   }
 }
 
 function clickCell(cell, cell_id) {
-  // Start Timer if Needed
-  if (!timer_active) { startTimer(); }
+  if (game_active) {
+    // Start Timer if Needed
+    if (!timer_active) { startTimer(); }
 
-  // Update Cell
-  var cell_cover = cell.querySelector('.cover');
-  if (cell_cover) {
-    cell.removeChild(cell_cover);
-    cell.onclick = null;
-    cell.classList.add('clicked');
-  }
+    // Update Cell
+    var cell_cover = cell.querySelector('.cover');
+    if (cell_cover) {
+      cell.removeChild(cell_cover);
+      cell.onclick = null;
+      cell.classList.add('clicked');
+    }
 
-  // Check Tile Value
-  var val = cell.innerHTML[0];
+    // Check Tile Value
+    var val = cell.innerHTML[0];
 
-  // hit mine
-  if (val == 'M') { hitMine(cell); }
+    // hit mine
+    if (val == 'M') { hitMine(cell); }
 
-  // hit nonzero number
-  else if (val != 0) { checkWin(); }
+    // hit nonzero number
+    else if (val != 0) { checkWin(); }
 
-  // hit 0 - recursion
-  else {
-    var split_id = cell_id.split('-');
-    var row = parseInt(split_id[1]);
-    var col = parseInt(split_id[2]);
+    // hit 0 - recursion
+    else {
+      var split_id = cell_id.split('-');
+      var row = parseInt(split_id[1]);
+      var col = parseInt(split_id[2]);
 
-    var r = Math.max(row-1, 0);
-    var r_hi = Math.min(row+1, num_rows-1);
-    var c;
-    var c_hi;
+      var r = Math.max(row-1, 0);
+      var r_hi = Math.min(row+1, num_rows-1);
+      var c;
+      var c_hi;
 
 
-    for (r; r<r_hi+1; r++) {
-      c = Math.max(col-1, 0);
-      c_hi = Math.min(col+1, num_cols-1);
-      for (c; c<=c_hi; c++) {
+      for (r; r<r_hi+1; r++) {
+        c = Math.max(col-1, 0);
+        c_hi = Math.min(col+1, num_cols-1);
+        for (c; c<=c_hi; c++) {
 
-        var adj_cell_id = 'c-' + String(r) + '-' + String(c);
-        var adj_cell = document.getElementById(adj_cell_id);
+          var adj_cell_id = 'c-' + String(r) + '-' + String(c);
+          var adj_cell = document.getElementById(adj_cell_id);
 
-        if ((adj_cell_id != cell_id) && (adj_cell.querySelector('.cover') != null)) {
-          clickCell(adj_cell, adj_cell_id);
+          if ((adj_cell_id != cell_id) && (adj_cell.querySelector('.cover') != null)) {
+            clickCell(adj_cell, adj_cell_id);
+          }
         }
       }
     }
@@ -352,6 +367,7 @@ function hitMine(cell) {
   smiley_btn.style.backgroundImage = 'url(./img/face-frown.png)';
   uncoverBoard('lose');
   stopTimer();
+  game_active = false;
 }
 
 function checkWin() {
@@ -367,6 +383,7 @@ function checkWin() {
     }
   }
   // player has won
+  game_active = false;
   stopTimer();
   smiley_btn.style.backgroundImage = 'url(./img/face-cool.png)';
   uncoverBoard('win');
