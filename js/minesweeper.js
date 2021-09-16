@@ -296,7 +296,6 @@ function flagCell(cell, cell_id) {
       cell.removeEventListener('click', cellClick);
       cell.addEventListener('click', cellClickAlt);
       subtractMineCount();
-      console.log('click')
     } else if (flag_cover) {
       vibrateDevice(25); // vibrate for 25ms
       cell.removeChild(flag_cover);
@@ -306,7 +305,6 @@ function flagCell(cell, cell_id) {
       cell.removeEventListener('click', cellClickAlt);
       cell.addEventListener('click', cellClick);
       addMineCount();
-      console.log('click1')
     }
   }
 }
