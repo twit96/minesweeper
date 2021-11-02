@@ -13,9 +13,9 @@
 		<meta name="author" content="Tyler Wittig" />
 		<!--  -->
     <link rel="icon" href="./img/flag.png" />
-    <link rel="stylesheet" type="text/css" href="main.css?v=20210611.4" />
+    <link rel="stylesheet" type="text/css" href="main.css?v=20211101" />
     <script src="./js/minesweeper.js?v=20210611.1" defer></script>
-    <script src="./js/styles.js" defer></script>
+    <script src="./js/styles.js?v=20211101" defer></script>
     <script src="./js/settings.js?v=20210611" defer></script>
   </head>
 
@@ -120,10 +120,19 @@
     <div id="orientation-lock">
       <span>Minesweeper</span>
       <p>
-        Oops! Looks like your screen is not large enough to play in landscape
+        Looks like your screen is not large enough to play in landscape
         mode. Please rotate to portrait orientation to play.
       </p>
       <img src="./img/face-scared.png" alt="uh oh face" class="outlined icon" />
+    </div>
+    <div id="loader">
+      <span>Minesweeper</span>
+      <div>
+        <img src="./img/flag.png" alt="cool face" class="outlined icon" />
+        <span>/</span>
+        <img src="./img/mine.png" alt="cool face" class="outlined icon" />
+      </div>
+      <b>Loading...</b>
     </div>
 
   </body>

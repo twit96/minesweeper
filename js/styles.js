@@ -53,7 +53,10 @@ window.addEventListener('resize', function() {
   }
 });
 
-setDimensions();
+window.onload = function() {
+  document.getElementById("loader").classList.add("hidden");
+  setDimensions();
+}
 
 var smiley_btn = document.getElementById('smiley-btn');
 smiley_btn.addEventListener("click", function(){

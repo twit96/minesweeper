@@ -285,7 +285,8 @@ img.icon {
 
 
 /* cover game in landscape mode if screen dimensions are not large enough */
-#orientation-lock {
+#orientation-lock,
+#loader {
   position: fixed;
   top: 0;
   left: 0;
@@ -304,6 +305,16 @@ img.icon {
   z-index: 1;
 }
 
+#loader {
+  opacity: 1;
+  transition: 0.5s opacity ease,
+              0s transform ease 0.5s;
+}
+#loader.hidden {
+  opacity: 0;
+  transform: translateX(100%);
+}
+
 @media only screen and (orientation: portrait),
 (min-width: 450px) and (min-height: 450px) {
   #orientation-lock {
@@ -316,7 +327,17 @@ img.icon {
   max-width: 35em;
 }
 
-#orientation-lock span {
+#orientation-lock > span,
+#loader span {
   font-size: 2rem;
   font-weight: bold;
+}
+
+#loader > div {
+  margin: 3rem 0;
+  display: flex;
+  align-items: center;
+}
+#loader > div span {
+  margin: 0 1rem;
 }
