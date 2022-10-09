@@ -4,7 +4,7 @@
 <!-- Title Image -->
 <p align="center">
   <a href="https://twit96.github.io/minesweeper/">
-    <img border="0" alt="Minesweeper - Title Card" src="/images/title-card.png">
+    <img border="0" alt="Minesweeper - Title Card" src="/img/title-card.png">
   </a>
 </p>
 
